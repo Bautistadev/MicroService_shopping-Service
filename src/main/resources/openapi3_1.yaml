@@ -1,0 +1,321 @@
+openapi: 3.1.0
+info:
+    title: "Shopping-Microservice"
+    summary: "Microservicio de compras de productos"
+    description: "En este microservicio se desarollaran todos los componentes que se crean necesario para proveer todos los recursos relacionados a las peticiones de de ventas de productos"
+    contact:
+        name: Bautista
+        email: Batubasilio@hotmail.com
+    version: 1.0.0
+    license: 
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+
+servers:
+    - url: "http://localhost:{port}/api/{basePath}"
+      variables:
+        port:
+            enum:
+                - '8084'
+                - '8080'
+            default: '8080'
+        basePath:
+            default: v1
+tags:
+    - name: "Details" 
+    - name: "Sales"
+
+components:
+    schemas:
+        DetailsDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                quantity:
+                    type: integer
+                    format: int32
+                productId:
+                    type: integer
+                    fotmat: int31
+                amount:
+                    type: number
+                    format: float
+                discount:
+                    type: number
+                    format: float
+                sale:
+                    type: object
+                    $ref: '#/components/schemas/SaleDTO'
+                
+
+        DetailsRequestDTO:
+            type: object
+            properties:
+                quantity:
+                    type: integer
+                    format: int32
+                productId:
+                    type: integer
+                    fotmat: int31
+                amount:
+                    type: number
+                    format: float
+                discount:
+                    type: number
+                    format: float
+                    
+        SaleDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                clientId:
+                    type: integer
+                    format: int32
+                amount:
+                    type: number
+                    format: float
+                dateCreated:
+                    type: string
+                    format: date
+                Details:
+                    type: array
+                    items:
+                        type: object
+                        $ref: '#/components/schemas/DetailsDTO'
+
+        SaleRequestDTO:
+            type: object
+            properties:
+                clientId:
+                    type: integer
+                    format: int32
+                amount:
+                    type: number
+                    format: float
+                dateCreated:
+                    type: string
+                    format: date
+                Details:
+                    type: array
+                    items:
+                        type: object
+                        $ref: '#/components/schemas/DetailsDTO'
+
+paths:
+    /details:
+        post:
+            tags:
+                - Details
+            security:
+                - bearerAuth: []
+            summary: Crear detalle
+            operationId: createDetail
+            requestBody: 
+              content: 
+                application/json: 
+                  schema:
+                    $ref: '#/components/schemas/DetailsRequestDTO'
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DetailsDTO'
+                    
+        put:
+            tags:
+                - Details
+            security:
+                - bearerAuth: []
+            summary: Modificar detalle
+            operationId: updateDetail
+            requestBody: 
+              content: 
+                application/json: 
+                  schema:
+                    $ref: '#/components/schemas/DetailsDTO'
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DetailsDTO'
+        get:
+            tags:
+                - Details
+            security:
+                - bearerAuth: []
+            summary: retrive all details
+            operationId: retriveAllDetails
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#components/schemas/DetailsDTO'
+    /details/{id}:  
+        get:
+            tags:
+                - Details
+            security:
+                - bearerAuth: []
+            summary: retrive all details
+            operationId: retriveDetailById
+            parameters:
+                - name: id
+                  in: path
+                  description: id del producto
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#components/schemas/DetailsDTO'
+
+        delete:
+            tags:
+                - Details
+            security:
+                - bearerAuth: []
+            summary: remove product by id
+            operationId: removeDetailById
+            parameters:
+                - name: id
+                  in: path
+                  description: id del producto
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#components/schemas/DetailsDTO'
+    
+    /sales:
+        post:
+            tags:
+                - Sales
+            security:
+                - bearerAuth: []
+            summary: Crear venta
+            operationId: createSale
+            requestBody: 
+              content: 
+                application/json: 
+                  schema:
+                    $ref: '#/components/schemas/SaleRequestDTO'
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SaleDTO'
+                    
+        put:
+            tags:
+                - Sales
+            security:
+                - bearerAuth: []
+            summary: Modificar venta
+            operationId: updateSale
+            requestBody: 
+              content: 
+                application/json: 
+                  schema:
+                    $ref: '#/components/schemas/SaleDTO'
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SaleDTO'
+        get:
+            tags:
+                - Sales
+            security:
+                - bearerAuth: []
+            summary: retrive all sales
+            operationId: retriveAllSales
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#components/schemas/SaleDTO'
+    /sales/{id}:  
+        get:
+            tags:
+                - Sales
+            security:
+                - bearerAuth: []
+            summary: retrive sale by id
+            operationId: retriveSaleById
+            parameters:
+                - name: id
+                  in: path
+                  description: id de la venta
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#components/schemas/SaleDTO'
+
+        delete:
+            tags:
+                - Details
+            security:
+                - bearerAuth: []
+            summary: remove product by id
+            operationId: removeSaleById
+            parameters:
+                - name: id
+                  in: path
+                  description: id del producto
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                message:
+                                    type: string
+                                    format: text
+                                    default: Venta eliminada
+
+
+
+
+
+
+        
+        
+   
