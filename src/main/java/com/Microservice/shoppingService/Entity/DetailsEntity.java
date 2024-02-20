@@ -1,5 +1,7 @@
 package com.Microservice.shoppingService.Entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,9 +27,19 @@ public class DetailsEntity {
     private Float amount;
     @Column(name = "discount", nullable = true)
     private Float discount;
+
     @ManyToOne
     @JoinColumn(name = "saleId")
-    private Sale sale;
+    private SaleEntity sale;
+
+
+    public Float getTamount(){
+
+        if(discount == null)
+            return this.amount * this.quantity;
+        else
+            return (this.amount * this.quantity)*(this.quantity/100);
+    }
 
     @Override
     public String toString() {
@@ -36,8 +48,9 @@ public class DetailsEntity {
                 ", quantity=" + quantity +
                 ", productId=" + productId +
                 ", amount=" + amount +
+                ", Tamount" + getTamount() +
                 ", discount=" + discount +
-                ", sale=" + sale +
+
                 '}';
     }
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -15,14 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Table(name="Sale")
-public class Sale {
+public class SaleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "clientId")
-    private Integer ClientId;
+    private Integer clientId;
 
     @Column(name = "amount")
     private Float amount;
@@ -30,14 +31,15 @@ public class Sale {
     @Column(name = "dateCreated")
     private LocalDate dateCreated;
 
-    @OneToMany(mappedBy = "sale")
+    @OneToMany(mappedBy = "sale", fetch = FetchType.EAGER)
     private List<DetailsEntity> details;
+
 
     @Override
     public String toString() {
-        return "Sale{" +
+        return "SaleEntity{" +
                 "id=" + id +
-                ", ClientId=" + ClientId +
+                ", clientId=" + clientId +
                 ", amount=" + amount +
                 ", dateCreated=" + dateCreated +
                 ", details=" + details +

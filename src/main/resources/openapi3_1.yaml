@@ -99,11 +99,15 @@ components:
                 dateCreated:
                     type: string
                     format: date
-                Details:
+
+
+        SaleListDTO:
+            type: object
+            properties:
+                items:
                     type: array
                     items:
-                        type: object
-                        $ref: '#/components/schemas/DetailsDTO'
+                        $ref: '#/components/schemas/SaleDTO'
 
 paths:
     /details:
@@ -159,7 +163,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#components/schemas/DetailsDTO'
+                                $ref: '#/components/schemas/DetailsDTO'
     /details/{id}:  
         get:
             tags:
@@ -182,7 +186,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#components/schemas/DetailsDTO'
+                                $ref: '#/components/schemas/DetailsDTO'
 
         delete:
             tags:
@@ -205,7 +209,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#components/schemas/DetailsDTO'
+                                $ref: '#/components/schemas/DetailsDTO'
     
     /sales:
         post:
@@ -260,7 +264,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#components/schemas/SaleDTO'
+                                $ref: '#/components/schemas/SaleListDTO'
     /sales/{id}:  
         get:
             tags:
@@ -283,7 +287,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#components/schemas/SaleDTO'
+                                $ref: '#/components/schemas/SaleDTO'
 
         delete:
             tags:
@@ -310,10 +314,29 @@ paths:
                                     type: string
                                     format: text
                                     default: Venta eliminada
-
-
-
-
+    /sales/client/{id}:
+        get:
+            tags:
+                - Sales
+            security:
+                - bearerAuth: [ ]
+            summary: retrive sale by cliente id
+            operationId: retriveSaleByClientId
+            parameters:
+                - name: id
+                  in: path
+                  description: id del cliente
+                  required: true
+                  schema:
+                      type: integer
+                      format: int32
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SaleListDTO'
 
 
         
