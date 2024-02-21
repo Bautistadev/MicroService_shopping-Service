@@ -65,6 +65,17 @@ components:
                 discount:
                     type: number
                     format: float
+                sale:
+                    type: object
+                    $ref: '#/components/schemas/SaleDTO'
+
+        DetailsListDTO:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/DetailsDTO'
                     
         SaleDTO:
             type: object
@@ -163,7 +174,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/DetailsDTO'
+                                $ref: '#/components/schemas/DetailsListDTO'
     /details/{id}:  
         get:
             tags:
@@ -209,7 +220,31 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/DetailsDTO'
+                                message: "Detalle borrado"
+    /details/sale/{id}:
+        get:
+            tags:
+                - Details
+            security:
+                - bearerAuth: [ ]
+            summary: retrive all details
+            operationId: retriveDetailBySaleId
+            parameters:
+                - name: id
+                  in: path
+                  description: id de la venta
+                  required: true
+                  schema:
+                      type: integer
+                      format: int32
+            responses:
+                200:
+                    description: Si la consulta no falla
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DetailsListDTO'
+
     
     /sales:
         post:
@@ -291,7 +326,7 @@ paths:
 
         delete:
             tags:
-                - Details
+                - Sales
             security:
                 - bearerAuth: []
             summary: remove product by id

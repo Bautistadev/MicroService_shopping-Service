@@ -33,6 +33,8 @@ public class SaleController implements SalesApiDelegate {
     @Override
     public ResponseEntity<SaleDTO> createSale(SaleRequestDTO saleRequestDTO) {
         SaleDTO saleEntity = this.saleService.save(saleRequestDTO);
+
+
         return ResponseEntity.status(HttpStatus.OK).body(saleEntity);
     }
 
