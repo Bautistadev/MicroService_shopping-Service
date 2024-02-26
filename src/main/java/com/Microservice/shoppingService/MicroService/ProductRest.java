@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name="product-Service",path="/api/v1/products")
 public interface ProductRest {
 
-    @GetMapping(value= "/{productId}")
+    @GetMapping(value= "/products/{productId}")
     /**Patron Circuit breaker*/
     @CircuitBreaker(name="retriveById", fallbackMethod = "defaultById")
     public ResponseEntity<ProductDTO> retriveById(@PathVariable("productId") Integer productId);

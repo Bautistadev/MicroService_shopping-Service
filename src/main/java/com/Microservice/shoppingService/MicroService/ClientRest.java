@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * Cliente feignt
  * */
-@FeignClient(name = "client-Service")
+@FeignClient(name = "client-Service",path="/api/v1/clients")
 public interface ClientRest {
 
-    @GetMapping(value = "/api/v1/clients/{id}")
+    @GetMapping(value = "/clients/{id}")
     /**Patron Circuit breaker*/
     @CircuitBreaker(name="retriveById",fallbackMethod = "defaultClientById")
     public ResponseEntity<ClientDTO> retriveClientById(@PathVariable("id") Integer id);

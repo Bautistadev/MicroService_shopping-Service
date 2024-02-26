@@ -12,7 +12,7 @@ info:
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 
 servers:
-    - url: "http://localhost:{port}/api/{basePath}"
+    - url: "http://localhost:{port}/api/{basePath}/shopping/"
       variables:
         port:
             enum:
