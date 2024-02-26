@@ -32,4 +32,5 @@ public class ConfigurationBean {
     public DetailsService detailsService(DetailsRepository detailsRepository, DetailsMapper detailsMapper){
         return new DetailsService(detailsRepository,detailsMapper);
     }
+
 }

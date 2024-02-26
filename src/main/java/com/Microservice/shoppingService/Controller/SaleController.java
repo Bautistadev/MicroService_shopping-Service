@@ -4,6 +4,7 @@ import com.Microservice.shoppingService.Entity.SaleEntity;
 import com.Microservice.shoppingService.SalesApiDelegate;
 import com.Microservice.shoppingService.Service.SaleService;
 import com.Microservice.shoppingService.model.*;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
+
 public class SaleController implements SalesApiDelegate {
 
     private SaleService saleService;

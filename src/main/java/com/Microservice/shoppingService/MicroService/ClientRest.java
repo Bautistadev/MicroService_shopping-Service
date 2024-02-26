@@ -1,0 +1,39 @@
+package com.Microservice.shoppingService.MicroService;
+
+import com.Microservice.shoppingService.model.ClientDTO;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http .ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+/**
+ * Cliente feignt
+ * */
+@FeignClient(name = "client-Service")
+public interface ClientRest {
+
+    @GetMapping(value = "/api/v1/clients/{id}")
+    /**Patron Circuit breaker*/
+    @CircuitBreaker(name="retriveById",fallbackMethod = "defaultClientById")
+    public ResponseEntity<ClientDTO> retriveClientById(@PathVariable("id") Integer id);
+
+
+    /**
+     * Funcion que retorna por defecto en caso de fallo en la conexion al microservicio
+     * */
+    public default ResponseEntity<ClientDTO> defaultClientById(Integer id,Exception ex) {
+        ClientDTO clientDTO = new ClientDTO()
+                .id(null)
+                .address(null)
+                .dni(null)
+                .birth(null)
+                .cuil(null)
+                .email(null)
+                .lastname(null)
+                .name(null)
+                .telephone(null);
+        return ResponseEntity.ok(clientDTO);
+    }
+}

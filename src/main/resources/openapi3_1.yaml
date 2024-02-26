@@ -39,6 +39,9 @@ components:
                 productId:
                     type: integer
                     fotmat: int31
+                product:
+                    type: object
+                    $ref: '#/components/schemas/ProductDTO'
                 amount:
                     type: number
                     format: float
@@ -97,6 +100,9 @@ components:
                     items:
                         type: object
                         $ref: '#/components/schemas/DetailsDTO'
+                client:
+                    type: object
+                    $ref: '#/components/schemas/ClientDTO'
 
         SaleRequestDTO:
             type: object
@@ -119,6 +125,131 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/SaleDTO'
+
+        ClientDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                lastname:
+                    type: string
+                dni:
+                    type: integer
+                    format: int32
+                    minLength: 12
+                cuil:
+                    type: integer
+                    format: int32
+                    minLength: 17
+                email:
+                    type: string
+                    format: email
+                telephone:
+                    type: string
+                birth:
+                    type: string
+                    format: date
+                Address:
+                    type: object
+                    $ref: '#/components/schemas/AddressDTO'
+        AddressDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                number:
+                    type: integer
+                    format: int32
+                location:
+                    type: object
+                    $ref: '#/components/schemas/LocationDTO'
+
+        LocationDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                postalCode:
+                    type: integer
+                    format: int32
+                province:
+                    type: object
+                    $ref: '#/components/schemas/ProvinceDTO'
+
+        ProvinceDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+
+        ProductDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                    description: Nombre del producto
+                price:
+                    type: number
+                    description: Precio del producto
+                status:
+                    type: string
+                    default: ENABLE
+                    enum:
+                        - ENABLE
+                        - DISABLE
+                        - SUSPENDED
+                brand:
+                    type: object
+                    description: Marca del producto
+                    $ref: '#/components/schemas/BrandDTO'
+
+                dateCreated:
+                    type: string
+                    format: date
+
+        PriceDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                price:
+                    type: number
+                product:
+                    type: object
+                    $ref: '#/components/schemas/ProductDTO'
+                dateCreated:
+                    type: string
+                    format: date
+
+        BrandDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                    description: "Marca"
+
+                dateCreated:
+                    type: string
+                    format: date
 
 paths:
     /details:
