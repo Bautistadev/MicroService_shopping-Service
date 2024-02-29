@@ -21,6 +21,9 @@ public class DetailsController implements DetailsApiDelegate {
         this.detailsService = detailsService;
     }
 
+    /**
+     * POST
+     * */
     @Override
     public ResponseEntity<DetailsDTO> createDetail(DetailsRequestDTO detailsRequestDTO) {
 
@@ -29,6 +32,9 @@ public class DetailsController implements DetailsApiDelegate {
         return ResponseEntity.status(HttpStatus.OK).body(detailsDTO);
     }
 
+    /**
+     * GET
+     * */
     @Override
     public ResponseEntity<Void> removeDetailById(Integer id) {
 
@@ -37,9 +43,11 @@ public class DetailsController implements DetailsApiDelegate {
         else
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
-
+    /**
+     * GET
+     * */
     @Override
-    public ResponseEntity<DetailsListDTO> retriveAllDetails() {
+    public ResponseEntity<DetailsListDTO> retrieveAllDetails() {
         DetailsListDTO detailsListDTO = new DetailsListDTO().items(this.detailsService.retriveAll());
 
         System.out.println(this.detailsService.retriveAll());
@@ -47,21 +55,30 @@ public class DetailsController implements DetailsApiDelegate {
         return ResponseEntity.status(HttpStatus.OK).body(detailsListDTO);
     }
 
+    /**
+     * GET
+     * */
     @Override
-    public ResponseEntity<DetailsDTO> retriveDetailById(Integer id) {
+    public ResponseEntity<DetailsDTO> retrieveDetailById(Integer id) {
 
         DetailsDTO response =  this.detailsService.findById(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    /**
+     * GET
+     * */
     @Override
-    public ResponseEntity<DetailsListDTO> retriveDetailBySaleId(Integer id) {
+    public ResponseEntity<DetailsListDTO> retrieveDetailBySaleId(Integer id) {
 
-        DetailsListDTO detailsListDTO = new DetailsListDTO().items(this.detailsService.retriveBySaleId(id));
+        DetailsListDTO detailsListDTO = new DetailsListDTO().items(this.detailsService.retrieveBySaleId(id));
         return ResponseEntity.status(HttpStatus.OK).body(detailsListDTO);
     }
 
+    /**
+     * POST
+     * */
     @Override
     public ResponseEntity<DetailsDTO> updateDetail(DetailsDTO detailsDTO) {
         return DetailsApiDelegate.super.updateDetail(detailsDTO);

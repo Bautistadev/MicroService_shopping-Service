@@ -37,7 +37,7 @@ public class SaleService {
      * @Operation: Retrive all sale
      * @Return: SaleDTO List
      * */
-    public List<SaleDTO> retriveAll(){
+    public List<SaleDTO> retrieveAll(){
 
         List<SaleDTO> response = this.saleRepository.findAll().stream().map(e ->{
             return this.saleMapper.map(e);

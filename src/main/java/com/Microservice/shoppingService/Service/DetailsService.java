@@ -22,6 +22,10 @@ public class DetailsService {
         this.detailsMapper = detailsMapper;
     }
 
+    /**
+     * @Operation: Retrive all Details
+     * @Return: DetailsDTO List
+     * */
     public List<DetailsDTO> retriveAll(){
         List<DetailsDTO> response =  this.detailsRepository.findAll().stream().map(e ->{
             return this.detailsMapper.map(e);
@@ -30,28 +34,53 @@ public class DetailsService {
         return response;
     }
 
+    /**
+     * @Operation: Retrive Detail by id
+     * @Param: Integer
+     * @Return: DetailsDTO
+     * */
     public DetailsDTO findById(Integer id){
         DetailsEntity details = this.detailsRepository.findById(id).get();
 
         return this.detailsMapper.map(details);
     }
 
+    /**
+     * @Operation: Save detail
+     * @Param: DetailsRequestDTO
+     * @Return: DetailsDTO
+     * */
     public DetailsDTO save(DetailsRequestDTO detailsRequestDTO){
         DetailsEntity details = this.detailsRepository.save(this.detailsMapper.map(detailsRequestDTO));
         return this.detailsMapper.map(details);
     }
 
+    /**
+     * @Operation: Update detail
+     * @Param: DetailsDTO
+     * @Return: DetailsDTO
+     * */
     public DetailsDTO update(DetailsDTO detailsDTO){
         DetailsEntity details = this.detailsRepository.save(this.detailsMapper.map(detailsDTO));
         return this.detailsMapper.map(details);
     }
 
-    public List<DetailsDTO> retriveBySaleId(Integer id){
+    /**
+     * @Operation: retrive by sale id
+     * @Param: Integer
+     * @Return: DetailsDTO List
+     * */
+    public List<DetailsDTO> retrieveBySaleId(Integer id){
         return this.detailsRepository.findBysaleId(id).stream().map(e ->{
             return this.detailsMapper.map(e);
         }).collect(Collectors.toList());
     }
 
+    /**
+     * @Operation: remove details by id
+     * @Param: Integer
+     * @Return: Boolean
+     * */
     public Boolean removeDetail(Integer id){
         this.detailsRepository.deleteById(id);
         return true;

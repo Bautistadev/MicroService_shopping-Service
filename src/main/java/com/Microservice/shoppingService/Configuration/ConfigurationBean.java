@@ -14,6 +14,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConfigurationBean {
 
+    /**
+     * MAPPER
+     * */
     @Bean
     public SaleMapper saleMapper(){
         return new SaleMapperImplements();
@@ -23,6 +26,10 @@ public class ConfigurationBean {
     public DetailsMapper detailsMapper(){
         return new DetailsMapperImplements();
     }
+
+    /**
+     * SERVICE
+     * */
     @Bean
     public SaleService saleService(SaleRepository saleRepository,SaleMapper saleMapper){
         return new SaleService(saleRepository,saleMapper);

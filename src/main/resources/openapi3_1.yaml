@@ -297,8 +297,8 @@ paths:
                 - Details
             security:
                 - bearerAuth: []
-            summary: retrive all details
-            operationId: retriveAllDetails
+            summary: retrieve all details
+            operationId: retrieveAllDetails
             responses:
                 200:
                     description: Si la consulta no falla
@@ -312,8 +312,8 @@ paths:
                 - Details
             security:
                 - bearerAuth: []
-            summary: retrive all details
-            operationId: retriveDetailById
+            summary: retrieve all details
+            operationId: retrieveDetailById
             parameters:
                 - name: id
                   in: path
@@ -358,8 +358,8 @@ paths:
                 - Details
             security:
                 - bearerAuth: [ ]
-            summary: retrive all details
-            operationId: retriveDetailBySaleId
+            summary: retrieve all details
+            operationId: retrieveDetailBySaleId
             parameters:
                 - name: id
                   in: path
@@ -422,8 +422,8 @@ paths:
                 - Sales
             security:
                 - bearerAuth: []
-            summary: retrive all sales
-            operationId: retriveAllSales
+            summary: retrieve all sales
+            operationId: retrieveAllSales
             responses:
                 200:
                     description: Si la consulta no falla
@@ -437,8 +437,8 @@ paths:
                 - Sales
             security:
                 - bearerAuth: []
-            summary: retrive sale by id
-            operationId: retriveSaleById
+            summary: retrieve sale by id
+            operationId: retrieveSaleById
             parameters:
                 - name: id
                   in: path
@@ -486,8 +486,8 @@ paths:
                 - Sales
             security:
                 - bearerAuth: [ ]
-            summary: retrive sale by cliente id
-            operationId: retriveSaleByClientId
+            summary: retrieve sale by cliente id
+            operationId: retrieveSaleByClientId
             parameters:
                 - name: id
                   in: path
