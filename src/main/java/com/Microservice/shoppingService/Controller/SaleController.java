@@ -28,7 +28,7 @@ public class SaleController implements SalesApiDelegate {
      * */
     @Override
     public ResponseEntity<SaleListDTO> retrieveAllSales() {
-        SaleListDTO saleListDTO = new SaleListDTO().items(this.saleService.retriveAll());
+        SaleListDTO saleListDTO = new SaleListDTO().items(this.saleService.retrieveAll());
         return ResponseEntity.status(HttpStatus.OK).body(saleListDTO);
     }
 

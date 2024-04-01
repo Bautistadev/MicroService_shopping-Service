@@ -28,7 +28,8 @@ public class SaleService {
     @Autowired
     private ProductRest productRest;
 
-    public SaleService(SaleRepository saleRepository, SaleMapper saleMapper) {
+
+    public SaleService(SaleRepository saleRepository, SaleMapper saleMapper ) {
         this.saleRepository = saleRepository;
         this.saleMapper = saleMapper;
     }
@@ -40,7 +41,7 @@ public class SaleService {
     public List<SaleDTO> retrieveAll(){
 
         List<SaleDTO> response = this.saleRepository.findAll().stream().map(e ->{
-            return this.saleMapper.map(e);
+            return this.findById(e.getId());
         }).collect(Collectors.toList());
 
 
@@ -82,8 +83,9 @@ public class SaleService {
     public List<SaleDTO> findByClientId(Integer id){
 
         List<SaleDTO> response = this.saleRepository.findByClientId(id).stream().map(e ->{
-            return this.saleMapper.map(e);
+            return this.findById(e.getId());
         }).collect(Collectors.toList());
+
         return response;
     }
     /**

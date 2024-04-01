@@ -32,8 +32,6 @@ public class MainApplication implements CommandLineRunner {
 
 		ProductRest clientRest = ctx.getBean(ProductRest.class);
 
-		System.out.println(clientRest.retriveById(1).getBody().toString());
-
 
 	}
 

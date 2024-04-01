@@ -1,10 +1,12 @@
 package com.Microservice.shoppingService.Service;
 
 import com.Microservice.shoppingService.Entity.DetailsEntity;
+import com.Microservice.shoppingService.MicroService.ProductRest;
 import com.Microservice.shoppingService.Repository.DetailsRepository;
 import com.Microservice.shoppingService.Service.Mapper.DetailsMapper;
 import com.Microservice.shoppingService.model.DetailsDTO;
 import com.Microservice.shoppingService.model.DetailsRequestDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,11 @@ public class DetailsService {
 
     private DetailsMapper detailsMapper;
 
+
+    @Autowired
+    private ProductRest productRest;
+
+
     public DetailsService(DetailsRepository detailsRepository, DetailsMapper detailsMapper) {
         this.detailsRepository = detailsRepository;
         this.detailsMapper = detailsMapper;
@@ -28,7 +35,9 @@ public class DetailsService {
      * */
     public List<DetailsDTO> retriveAll(){
         List<DetailsDTO> response =  this.detailsRepository.findAll().stream().map(e ->{
-            return this.detailsMapper.map(e);
+            DetailsDTO res = this.detailsMapper.map(e);
+            res.setProduct(this.productRest.retriveById(e.getProductId()).getBody());
+            return res;
         }).collect(Collectors.toList());
 
         return response;
@@ -41,8 +50,9 @@ public class DetailsService {
      * */
     public DetailsDTO findById(Integer id){
         DetailsEntity details = this.detailsRepository.findById(id).get();
-
-        return this.detailsMapper.map(details);
+        DetailsDTO response = this.detailsMapper.map(details);
+        response.setProduct(this.productRest.retriveById(response.getProductId()).getBody());
+        return response;
     }
 
     /**
