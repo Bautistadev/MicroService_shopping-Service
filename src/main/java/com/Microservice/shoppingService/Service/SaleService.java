@@ -5,6 +5,8 @@ import com.Microservice.shoppingService.MicroService.ClientRest;
 import com.Microservice.shoppingService.MicroService.ProductRest;
 import com.Microservice.shoppingService.Repository.SaleRepository;
 import com.Microservice.shoppingService.Service.Mapper.SaleMapper;
+import com.Microservice.shoppingService.model.DetailsDTO;
+import com.Microservice.shoppingService.model.ProductDTO;
 import com.Microservice.shoppingService.model.SaleDTO;
 import com.Microservice.shoppingService.model.SaleRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +62,8 @@ public class SaleService {
         return saleDTO;
     }
 
+
+
     /**
      * @Operation: FIND SALE BY ID
      * @Param: Integer
@@ -70,12 +74,15 @@ public class SaleService {
         /**REST PETITION*/
         response.setClient(this.clientRest.retriveClientById(response.getClientId(),authorization).getBody());
         response.getDetails().stream().map(e ->{
-             e.setProduct(this.productRest.retriveById(e.getProductId()).getBody());
+             ProductDTO productDTO = this.productRest.retriveById(e.getProductId()).getBody();
+             e.setProduct(productDTO);
              return e;
         }).collect(Collectors.toList());
         return response;
-
     }
+
+
+
     /**
      * @Operation: FIND SALE BY ClientID
      * @Param: Integer
@@ -89,6 +96,7 @@ public class SaleService {
 
         return response;
     }
+
     /**
      * @Operation: Update
      * @Param: SaleDTO
@@ -96,6 +104,7 @@ public class SaleService {
      * */
     public SaleDTO update(SaleDTO saleDTO){
         SaleEntity saleEntity = this.saleMapper.map(saleDTO);
+        saleEntity.setAmount(saleEntity.getDetails().stream().map(e->e.getAmount()).reduce(0.0f,Float::sum));
         return this.saleMapper.map(this.saleRepository.save(saleEntity));
     }
 

@@ -15,7 +15,6 @@ public class DetailsMapperImplements implements DetailsMapper{
     public DetailsEntity map(DetailsRequestDTO detailsRequestDTO) {
 
         DetailsEntity details = DetailsEntity.builder()
-                .amount(detailsRequestDTO.getAmount())
                 .quantity(detailsRequestDTO.getQuantity())
                 .discount(detailsRequestDTO.getDiscount())
                 .productId(detailsRequestDTO.getProductId())

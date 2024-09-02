@@ -62,9 +62,6 @@ components:
                 productId:
                     type: integer
                     fotmat: int31
-                amount:
-                    type: number
-                    format: float
                 discount:
                     type: number
                     format: float
@@ -110,9 +107,6 @@ components:
                 clientId:
                     type: integer
                     format: int32
-                amount:
-                    type: number
-                    format: float
                 dateCreated:
                     type: string
                     format: date

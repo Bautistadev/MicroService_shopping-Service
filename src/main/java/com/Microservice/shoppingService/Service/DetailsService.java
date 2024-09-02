@@ -6,9 +6,11 @@ import com.Microservice.shoppingService.Repository.DetailsRepository;
 import com.Microservice.shoppingService.Service.Mapper.DetailsMapper;
 import com.Microservice.shoppingService.model.DetailsDTO;
 import com.Microservice.shoppingService.model.DetailsRequestDTO;
+import com.Microservice.shoppingService.model.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,7 @@ public class DetailsService {
     public DetailsService(DetailsRepository detailsRepository, DetailsMapper detailsMapper) {
         this.detailsRepository = detailsRepository;
         this.detailsMapper = detailsMapper;
+
     }
 
     /**
@@ -61,8 +64,24 @@ public class DetailsService {
      * @Return: DetailsDTO
      * */
     public DetailsDTO save(DetailsRequestDTO detailsRequestDTO){
-        DetailsEntity details = this.detailsRepository.save(this.detailsMapper.map(detailsRequestDTO));
-        return this.detailsMapper.map(details);
+
+        DetailsEntity details = this.detailsMapper.map(detailsRequestDTO);
+
+        ProductDTO productDTO = this.productRest.retriveById(details.getProductId()).getBody();
+
+        details.setAmount(calculateMount(productDTO.getPrice(),details.getQuantity(),details.getDiscount()));
+
+        return this.detailsMapper.map(this.detailsRepository.save(details));
+    }
+
+    private Float calculateMount(BigDecimal price, Integer quantity, Float discount){
+
+        Float amount =  price.floatValue() * quantity;
+
+        if(discount != null || discount != 0)
+            return amount - amount*(discount/100);
+
+        return amount;
     }
 
     /**

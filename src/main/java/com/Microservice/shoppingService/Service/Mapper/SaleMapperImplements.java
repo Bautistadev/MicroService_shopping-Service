@@ -60,7 +60,6 @@ public class SaleMapperImplements implements SaleMapper{
     public SaleEntity map(SaleRequestDTO saleDTO) {
         SaleEntity saleEntity = SaleEntity.builder()
                 .clientId(saleDTO.getClientId())
-                .amount(saleDTO.getAmount())
                 .dateCreated(saleDTO.getDateCreated())
                 .build();
 

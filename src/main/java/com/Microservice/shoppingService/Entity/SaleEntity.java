@@ -25,7 +25,7 @@ public class SaleEntity {
     @Column(name = "clientId")
     private Integer clientId;
 
-    @Column(name = "amount")
+    @Column(name = "amount",nullable = true)
     private Float amount;
 
     @Column(name = "dateCreated")
