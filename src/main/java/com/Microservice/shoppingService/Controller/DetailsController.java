@@ -21,13 +21,14 @@ public class DetailsController implements DetailsApiDelegate {
         this.detailsService = detailsService;
     }
 
+
     /**
      * POST
      * */
     @Override
-    public ResponseEntity<DetailsDTO> createDetail(DetailsRequestDTO detailsRequestDTO) {
+    public ResponseEntity<DetailsDTO> createDetail(String authorization,DetailsRequestDTO detailsRequestDTO) {
 
-        DetailsDTO detailsDTO = this.detailsService.save(detailsRequestDTO);
+        DetailsDTO detailsDTO = this.detailsService.save(detailsRequestDTO,authorization);
 
         return ResponseEntity.status(HttpStatus.OK).body(detailsDTO);
     }
@@ -47,10 +48,10 @@ public class DetailsController implements DetailsApiDelegate {
      * GET
      * */
     @Override
-    public ResponseEntity<DetailsListDTO> retrieveAllDetails() {
-        DetailsListDTO detailsListDTO = new DetailsListDTO().items(this.detailsService.retriveAll());
+    public ResponseEntity<DetailsListDTO> retrieveAllDetails(String authorization) {
+        DetailsListDTO detailsListDTO = new DetailsListDTO().items(this.detailsService.retriveAll(authorization));
 
-        System.out.println(this.detailsService.retriveAll());
+        System.out.println(this.detailsService.retriveAll(authorization));
 
         return ResponseEntity.status(HttpStatus.OK).body(detailsListDTO);
     }
@@ -59,9 +60,9 @@ public class DetailsController implements DetailsApiDelegate {
      * GET
      * */
     @Override
-    public ResponseEntity<DetailsDTO> retrieveDetailById(Integer id) {
+    public ResponseEntity<DetailsDTO> retrieveDetailById(Integer id,String authorization) {
 
-        DetailsDTO response =  this.detailsService.findById(id);
+        DetailsDTO response =  this.detailsService.findById(id,authorization);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

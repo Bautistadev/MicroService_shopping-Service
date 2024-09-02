@@ -254,6 +254,14 @@ paths:
                 - bearerAuth: []
             summary: Crear detalle
             operationId: createDetail
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Token de autorización JWT
+                  required: true
+                  schema:
+                      type: string
+                      example: Bearer your_token_her
             requestBody: 
               content: 
                 application/json: 
@@ -293,6 +301,14 @@ paths:
                 - bearerAuth: []
             summary: retrieve all details
             operationId: retrieveAllDetails
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: JWT token para autenticacion
+                  required: true
+                  schema:
+                    type: string
+                    format: string
             responses:
                 200:
                     description: Si la consulta no falla
@@ -316,6 +332,13 @@ paths:
                   schema:
                     type: integer
                     format: int32
+                - name: Authorization
+                  in: header
+                  description: JWT token para autenticacion
+                  required: true
+                  schema:
+                      type: string
+                      format: string
             responses:
                 200:
                     description: Si la consulta no falla

@@ -74,7 +74,7 @@ public class SaleService {
         /**REST PETITION*/
         response.setClient(this.clientRest.retriveClientById(response.getClientId(),authorization).getBody());
         response.getDetails().stream().map(e ->{
-             ProductDTO productDTO = this.productRest.retriveById(e.getProductId()).getBody();
+             ProductDTO productDTO = this.productRest.retriveById(e.getProductId(),authorization).getBody();
              e.setProduct(productDTO);
              return e;
         }).collect(Collectors.toList());

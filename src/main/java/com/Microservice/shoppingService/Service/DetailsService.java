@@ -36,10 +36,10 @@ public class DetailsService {
      * @Operation: Retrive all Details
      * @Return: DetailsDTO List
      * */
-    public List<DetailsDTO> retriveAll(){
+    public List<DetailsDTO> retriveAll(String authorization){
         List<DetailsDTO> response =  this.detailsRepository.findAll().stream().map(e ->{
             DetailsDTO res = this.detailsMapper.map(e);
-            res.setProduct(this.productRest.retriveById(e.getProductId()).getBody());
+            res.setProduct(this.productRest.retriveById(e.getProductId(),authorization).getBody());
             return res;
         }).collect(Collectors.toList());
 
@@ -51,10 +51,10 @@ public class DetailsService {
      * @Param: Integer
      * @Return: DetailsDTO
      * */
-    public DetailsDTO findById(Integer id){
+    public DetailsDTO findById(Integer id,String authorization){
         DetailsEntity details = this.detailsRepository.findById(id).get();
         DetailsDTO response = this.detailsMapper.map(details);
-        response.setProduct(this.productRest.retriveById(response.getProductId()).getBody());
+        response.setProduct(this.productRest.retriveById(response.getProductId(),authorization).getBody());
         return response;
     }
 
@@ -63,11 +63,11 @@ public class DetailsService {
      * @Param: DetailsRequestDTO
      * @Return: DetailsDTO
      * */
-    public DetailsDTO save(DetailsRequestDTO detailsRequestDTO){
+    public DetailsDTO save(DetailsRequestDTO detailsRequestDTO,String authorization){
 
         DetailsEntity details = this.detailsMapper.map(detailsRequestDTO);
 
-        ProductDTO productDTO = this.productRest.retriveById(details.getProductId()).getBody();
+        ProductDTO productDTO = this.productRest.retriveById(details.getProductId(),authorization).getBody();
 
         details.setAmount(calculateMount(productDTO.getPrice(),details.getQuantity(),details.getDiscount()));
 
