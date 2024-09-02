@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http .ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
  * Cliente feignt
@@ -16,14 +17,14 @@ public interface ClientRest {
 
     @GetMapping(value = "/clients/{id}")
     /**Patron Circuit breaker*/
-    @CircuitBreaker(name="retriveById",fallbackMethod = "defaultClientById")
-    public ResponseEntity<ClientDTO> retriveClientById(@PathVariable("id") Integer id);
+    @CircuitBreaker(name="retrieveClientById",fallbackMethod = "defaultClientById")
+    public ResponseEntity<ClientDTO> retriveClientById(@PathVariable("id") Integer id, @RequestHeader("Authorization") String authorizationHeader);
 
 
     /**
      * Funcion que retorna por defecto en caso de fallo en la conexion al microservicio
      * */
-    public default ResponseEntity<ClientDTO> defaultClientById(Integer id,Exception ex) {
+    public default ResponseEntity<ClientDTO> defaultClientById(Integer id,String authorizationHeader,Exception ex) {
         ClientDTO clientDTO = new ClientDTO()
                 .id(null)
                 .address(null)

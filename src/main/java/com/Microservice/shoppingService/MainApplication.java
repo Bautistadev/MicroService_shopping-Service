@@ -30,7 +30,9 @@ public class MainApplication implements CommandLineRunner {
 
 		ApplicationContext ctx = SpringApplication.run(MainApplication.class, args);
 
-		ProductRest clientRest = ctx.getBean(ProductRest.class);
+		ClientRest clientRest = ctx.getBean(ClientRest.class);
+
+		//System.out.println(clientRest.retriveClientById(1));
 
 
 	}

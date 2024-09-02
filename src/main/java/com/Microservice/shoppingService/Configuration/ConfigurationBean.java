@@ -1,5 +1,6 @@
 package com.Microservice.shoppingService.Configuration;
 
+import com.Microservice.shoppingService.MicroService.BearerTokenFilter;
 import com.Microservice.shoppingService.Repository.DetailsRepository;
 import com.Microservice.shoppingService.Repository.SaleRepository;
 import com.Microservice.shoppingService.Service.DetailsService;
@@ -8,6 +9,11 @@ import com.Microservice.shoppingService.Service.Mapper.DetailsMapperImplements;
 import com.Microservice.shoppingService.Service.Mapper.SaleMapper;
 import com.Microservice.shoppingService.Service.Mapper.SaleMapperImplements;
 import com.Microservice.shoppingService.Service.SaleService;
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -39,5 +45,14 @@ public class ConfigurationBean {
     public DetailsService detailsService(DetailsRepository detailsRepository, DetailsMapper detailsMapper){
         return new DetailsService(detailsRepository,detailsMapper);
     }
+
+    @Configuration
+    public class FeignConfig {
+        @Bean
+        public HttpMessageConverters httpMessageConverters() {
+            return new HttpMessageConverters();
+        }
+    }
+
 
 }

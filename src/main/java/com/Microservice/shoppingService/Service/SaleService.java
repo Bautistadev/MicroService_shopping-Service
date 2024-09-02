@@ -38,10 +38,10 @@ public class SaleService {
      * @Operation: Retrive all sale
      * @Return: SaleDTO List
      * */
-    public List<SaleDTO> retrieveAll(){
+    public List<SaleDTO> retrieveAll(String authorization){
 
         List<SaleDTO> response = this.saleRepository.findAll().stream().map(e ->{
-            return this.findById(e.getId());
+            return this.findById(e.getId(),authorization);
         }).collect(Collectors.toList());
 
 
@@ -65,25 +65,26 @@ public class SaleService {
      * @Param: Integer
      * @Return SaleDTO
      * */
-    public SaleDTO findById(Integer id){
+    public SaleDTO findById(Integer id,String authorization){
         SaleDTO response = this.saleMapper.map(this.saleRepository.findById(id).get());
         /**REST PETITION*/
-        response.setClient(this.clientRest.retriveClientById(response.getClientId()).getBody());
+        response.setClient(this.clientRest.retriveClientById(response.getClientId(),authorization).getBody());
         response.getDetails().stream().map(e ->{
              e.setProduct(this.productRest.retriveById(e.getProductId()).getBody());
              return e;
         }).collect(Collectors.toList());
         return response;
+
     }
     /**
      * @Operation: FIND SALE BY ClientID
      * @Param: Integer
      * @Return SaleDTO
      * */
-    public List<SaleDTO> findByClientId(Integer id){
+    public List<SaleDTO> findByClientId(Integer id,String authorization){
 
         List<SaleDTO> response = this.saleRepository.findByClientId(id).stream().map(e ->{
-            return this.findById(e.getId());
+            return this.findById(e.getId(),authorization);
         }).collect(Collectors.toList());
 
         return response;

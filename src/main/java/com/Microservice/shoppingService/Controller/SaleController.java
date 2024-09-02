@@ -27,8 +27,8 @@ public class SaleController implements SalesApiDelegate {
      * GET
      * */
     @Override
-    public ResponseEntity<SaleListDTO> retrieveAllSales() {
-        SaleListDTO saleListDTO = new SaleListDTO().items(this.saleService.retrieveAll());
+    public ResponseEntity<SaleListDTO> retrieveAllSales(String authorization) {
+        SaleListDTO saleListDTO = new SaleListDTO().items(this.saleService.retrieveAll(authorization));
         return ResponseEntity.status(HttpStatus.OK).body(saleListDTO);
     }
 
@@ -53,8 +53,8 @@ public class SaleController implements SalesApiDelegate {
     * GET
     * */
     @Override
-    public ResponseEntity<SaleDTO> retrieveSaleById(Integer id) {
-        SaleDTO response = this.saleService.findById(id);
+    public ResponseEntity<SaleDTO> retrieveSaleById(Integer id,String authorization) {
+        SaleDTO response = this.saleService.findById(id,authorization);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -69,10 +69,17 @@ public class SaleController implements SalesApiDelegate {
     /**
      * GET
      * */
-    @Override
-    public ResponseEntity<SaleListDTO> retrieveSaleByClientId(Integer id) {
-        List<SaleDTO> saleDTO = this.saleService.findByClientId(id);
+    /*public ResponseEntity<SaleListDTO> retrieveSaleByClientId(Integer id,String authorization) {
+        List<SaleDTO> saleDTO = this.saleService.findByClientId(id,authorization);
         SaleListDTO resonse =  new SaleListDTO().items(saleDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(resonse);
+    }*/
+
+    @Override
+    public ResponseEntity<SaleListDTO> retrieveSaleByClientId(Integer id, String authorization) {
+        List<SaleDTO> saleDTO = this.saleService.findByClientId(id,authorization);
+        SaleListDTO resonse =  new SaleListDTO().items(saleDTO);
+        System.out.println(authorization);
         return ResponseEntity.status(HttpStatus.OK).body(resonse);
     }
 }

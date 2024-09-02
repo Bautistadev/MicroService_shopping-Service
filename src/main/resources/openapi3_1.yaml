@@ -424,6 +424,14 @@ paths:
                 - bearerAuth: []
             summary: retrieve all sales
             operationId: retrieveAllSales
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: JWT token para autenticacion
+                  required: true
+                  schema:
+                      type: string
+                      format: string
             responses:
                 200:
                     description: Si la consulta no falla
@@ -447,6 +455,13 @@ paths:
                   schema:
                     type: integer
                     format: int32
+                - name: Authorization
+                  in: header
+                  description: JWT token para autenticacion
+                  required: true
+                  schema:
+                      type: string
+                      format: string
             responses:
                 200:
                     description: Si la consulta no falla
@@ -496,6 +511,13 @@ paths:
                   schema:
                       type: integer
                       format: int32
+                - name: Authorization
+                  in: header
+                  description: JWT token para autenticacion
+                  required: true
+                  schema:
+                      type: string
+                      format: string
             responses:
                 200:
                     description: Si la consulta no falla
